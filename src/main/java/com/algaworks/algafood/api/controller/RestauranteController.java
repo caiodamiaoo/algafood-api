@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -79,8 +80,13 @@ public class RestauranteController {
 	@PutMapping("/{id}")
 	public ResponseEntity<?> atualizar(@PathVariable Long id, @RequestBody Restaurante restaurante) {
 		try {
-			Restaurante restauranteNovo = cadastroRestauranteService.atualizar(id, restaurante);
-			return ResponseEntity.ok(restauranteNovo);
+			Restaurante restauranteAtual = restauranteRepository.findById(id).orElse(null);
+			if(restauranteAtual != null){
+				BeanUtils.copyProperties(restaurante,restauranteAtual,"id", "formasPagamento", "endereco", "dataCadastro");
+				restauranteAtual = cadastroRestauranteService.salvar(restauranteAtual);
+				return ResponseEntity.ok(restauranteAtual);
+			}
+			return ResponseEntity.notFound().build();
 			
 		} catch (EntidadeNaoEncontradaException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
