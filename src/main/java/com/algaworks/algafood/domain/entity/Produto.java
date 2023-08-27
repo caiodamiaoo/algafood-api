@@ -1,5 +1,6 @@
 package com.algaworks.algafood.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -8,6 +9,7 @@ import java.math.BigDecimal;
 
 @Data
 @Entity
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Table(name = "tab_produto")
 public class Produto {
 
@@ -29,6 +31,7 @@ public class Produto {
     private Boolean ativo;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "restaurante_id_produto")
     private Restaurante restaurante;
 }

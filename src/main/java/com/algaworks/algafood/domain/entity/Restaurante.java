@@ -46,6 +46,9 @@ public class Restaurante {
 	@JsonIgnore
 	private Endereco endereco;
 
+	@OneToMany(mappedBy = "restaurante")
+	private List<Produto> produtos;
+
 	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "restaurante_forma_pagamento",
