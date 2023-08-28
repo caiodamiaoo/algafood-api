@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -15,12 +16,14 @@ public class Grupo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
+    @Column(name = "grupo_id")
     private Long id;
 
     @Column(name = "nome_grupo")
     private String nomeGrupo;
 
     @ManyToMany
-    @JoinColumn(name = "permissao_grupo_id")
-    private List<Permissao> permissoes;
+    @JoinTable(name = "tab_grupo_permissao", joinColumns = @JoinColumn(name = "grupo_id"),
+            inverseJoinColumns = @JoinColumn(name = "permissao_id"))
+    private List<Permissao> permissoes = new ArrayList<>();
 }

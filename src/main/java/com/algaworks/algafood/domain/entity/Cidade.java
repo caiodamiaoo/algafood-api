@@ -1,5 +1,6 @@
 package com.algaworks.algafood.domain.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,7 +25,8 @@ public class Cidade {
 	
 	@Column(name = "nome_cidade")
 	private String nome;
-	
+
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "estado_codigo")
 	private Estado estado;

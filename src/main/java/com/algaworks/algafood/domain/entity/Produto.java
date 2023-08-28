@@ -30,8 +30,8 @@ public class Produto {
     @Column(name = "status")
     private Boolean ativo;
 
-    @ManyToOne
     @JsonIgnore
+    @ManyToOne
     @JoinColumn(name = "restaurante_id_produto")
     private Restaurante restaurante;
 }

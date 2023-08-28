@@ -18,6 +18,7 @@ public class Permissao {
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "permissao_id")
 	private Long id;
 	
 	@Column(name = "nome_permissao")
