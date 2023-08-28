@@ -18,7 +18,7 @@ public class FormaPagamento {
 	@EqualsAndHashCode.Include
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long forma_pagamento_id;
+	private Long id;
 	
 	@Column(name = "descricao_pagamento")
 	private String descricao;

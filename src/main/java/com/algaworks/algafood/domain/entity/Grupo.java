@@ -16,7 +16,6 @@ public class Grupo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
-    @Column(name = "grupo_id")
     private Long id;
 
     @Column(name = "nome_grupo")

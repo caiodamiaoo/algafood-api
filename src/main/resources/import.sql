@@ -15,12 +15,11 @@ insert into tab_produto(nome_produto, descricao_produto, preco_produto, status, 
 
 insert into tab_produto(nome_produto, descricao_produto, preco_produto, status, restaurante_id_produto) values ('Teclado', 'Gamer', 20, null, 2);
 
-insert into tab_forma_pagamento (forma_pagamento_id, descricao_pagamento) values (1, 'Cartao de crédito');
-insert into tab_forma_pagamento (forma_pagamento_id, descricao_pagamento) values (2, 'Cartao de débito');
-insert into tab_forma_pagamento (forma_pagamento_id, descricao_pagamento) values (3, 'Dinheiro');
+insert into tab_forma_pagamento (id, descricao_pagamento) values (1, 'Cartao de crédito');
+insert into tab_forma_pagamento (id, descricao_pagamento) values (2, 'Cartao de débito');
+insert into tab_forma_pagamento (id, descricao_pagamento) values (3, 'Dinheiro');
 
 insert into tab_restaurante_forma_pagamento(restaurante_id, forma_pagamento_id) values (1,1);
-insert into tab_restaurante_forma_pagamento(restaurante_id, forma_pagamento_id) values (1,2);
 insert into tab_restaurante_forma_pagamento(restaurante_id, forma_pagamento_id) values (1,3);
 insert into tab_restaurante_forma_pagamento(restaurante_id, forma_pagamento_id) values (2,1);
 insert into tab_restaurante_forma_pagamento(restaurante_id, forma_pagamento_id) values (2,2);
