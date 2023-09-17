@@ -39,10 +39,10 @@ insert into tab_estado(nome_estado) values ('Pará');
 insert into tab_estado(nome_estado) values ('São Paulo');
 insert into tab_estado(nome_estado) values ('Amapá');
 
-insert into tab_cidade(nome_cidade, estado_codigo, nome_estado) values ('Belém', 1, 'Pará');
-insert into tab_cidade(nome_cidade, estado_codigo, nome_estado) values ('Benevides', 1, 'Pará');
-insert into tab_cidade(nome_cidade, estado_codigo, nome_estado) values ('Campinas', 2, 'São Paulo');
-insert into tab_cidade(nome_cidade, estado_codigo, nome_estado) values ('Macapá', 3, 'Amapá');
+insert into tab_cidade(nome_cidade, estado_codigo) values ('Belém', 1);
+insert into tab_cidade(nome_cidade, estado_codigo) values ('Benevides', 1);
+insert into tab_cidade(nome_cidade, estado_codigo) values ('Campinas', 2);
+insert into tab_cidade(nome_cidade, estado_codigo) values ('Macapá', 3);
 
 
 insert into tab_restaurante(nome_restaurante,taxa_frete,cozinha_codigo, data_cadastro, data_atualizacao) values ('Flongfood', 12, 1, utc_timestamp, utc_timestamp);

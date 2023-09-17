@@ -1,0 +1,1 @@
+ALTER TABLE tab_cidade DROP COLUMN nome_estado;
