@@ -1,5 +1,6 @@
 package com.algaworks.algafood.domain.service;
 
+import com.algaworks.algafood.domain.exception.EstadoNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -22,7 +23,7 @@ public class CadastroEstadoService {
         try {
             return estadoRepository.save(estado);
         } catch (EmptyResultDataAccessException e) {
-            throw new EntidadeNaoEncontradaException(String.format(MSG_ENTIDADE_NAO_ENCONTRADA, estado.getId()));
+            throw new EstadoNaoEncontradoException(String.format(MSG_ENTIDADE_NAO_ENCONTRADA, estado.getId()));
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(String.format(MSG_ENTIDADE_EM_USO, estado.getId()));
         }
@@ -34,14 +35,13 @@ public class CadastroEstadoService {
             Estado estado = estadoRepository.findById(id).orElse(null);
             estadoRepository.delete(estado);
         } catch (EmptyResultDataAccessException e) {
-            throw new EntidadeNaoEncontradaException(String.format(MSG_ENTIDADE_NAO_ENCONTRADA, id));
+            throw new EstadoNaoEncontradoException(String.format(MSG_ENTIDADE_NAO_ENCONTRADA, id));
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(String.format(MSG_ENTIDADE_EM_USO, id));
         }
     }
 
     public Estado buscarOuFalhar(Long id) {
-        return estadoRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException
-                (String.format(MSG_ENTIDADE_NAO_ENCONTRADA, id)));
+        return estadoRepository.findById(id).orElseThrow(() -> new EstadoNaoEncontradoException(id));
     }
 }

@@ -26,7 +26,6 @@ public class Cidade {
 	@Column(name = "nome_cidade")
 	private String nome;
 
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "estado_codigo")
 	private Estado estado;

@@ -1,5 +1,7 @@
 package com.algaworks.algafood.domain.service;
 
+import com.algaworks.algafood.domain.exception.CozinhaNaoEncontradaException;
+import com.algaworks.algafood.domain.exception.RestauranteNaoEncontradoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -25,15 +27,18 @@ public class CadastroRestauranteService {
     @Autowired
     private CozinhaRepository cozinhaRepository;
 
+    @Autowired
+    private CadastroCozinhaService cadastroCozinhaService;
     public Restaurante salvar(Restaurante restaurante) {
-        Long cozinhaId = restaurante.getCozinha().getId();
-        Cozinha cozinha = cozinhaRepository.findById(cozinhaId).orElse(null);
-        if (cozinha == null) {
-            throw new EntidadeNaoEncontradaException(String.format(MSG_ENTIDADE_NAO_ENCONTRADA_COZINHA, cozinhaId));
+        try{
+            Long cozinhaId = restaurante.getCozinha().getId();
+            Cozinha cozinha = cadastroCozinhaService.buscarOuFalhar(cozinhaId);
+            restaurante.setCozinha(cozinha);
+            return restauranteRepository.save(restaurante);
         }
-        restaurante.setCozinha(cozinha);
-
-        return restauranteRepository.save(restaurante);
+        catch (EmptyResultDataAccessException e){
+            throw new CozinhaNaoEncontradaException(restaurante.getCozinha().getId());
+        }
     }
 
     public Restaurante atualizar(Long id, Restaurante restaurante) {
@@ -44,8 +49,7 @@ public class CadastroRestauranteService {
             restauranteAtual.setTaxaFrete(restaurante.getTaxaFrete());
             return restauranteRepository.save(restauranteAtual);
         } catch (EmptyResultDataAccessException e) {
-            throw new EntidadeNaoEncontradaException(
-                    String.format(MSG_ENTIDADE_NAO_ENCONTRADA, id));
+            throw new RestauranteNaoEncontradoException(id);
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(String.format(MSG_ENTIDADE_NAO_ENCONTRADA_COZINHA, restaurante.getCozinha().getId()));
         }
@@ -55,14 +59,13 @@ public class CadastroRestauranteService {
         try {
             restauranteRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
-            throw new EntidadeNaoEncontradaException(String.format(MSG_ENTIDADE_NAO_ENCONTRADA, id));
+            throw new RestauranteNaoEncontradoException(id);
         } catch (DataIntegrityViolationException e) {
             throw new EntidadeEmUsoException(String.format(ENTIDADE_EM_USO, id));
         }
     }
 
     public Restaurante buscarOuFalhar(Long id) {
-        return restauranteRepository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException
-                (String.format(MSG_ENTIDADE_NAO_ENCONTRADA, id)));
+        return restauranteRepository.findById(id).orElseThrow(() -> new RestauranteNaoEncontradoException(id));
     }
 }

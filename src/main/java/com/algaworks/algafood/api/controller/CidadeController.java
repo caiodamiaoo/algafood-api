@@ -2,6 +2,8 @@ package com.algaworks.algafood.api.controller;
 
 import java.util.List;
 
+import com.algaworks.algafood.domain.exception.EstadoNaoEncontradoException;
+import com.algaworks.algafood.domain.exception.NegocioException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,8 +40,13 @@ public class CidadeController {
 
     @PostMapping
     public Cidade incluir(@RequestBody Cidade cidade) {
+        try{
+            return cadastroCidadeService.salvar(cidade);
+        }
+        catch(EstadoNaoEncontradoException e){
+            throw new NegocioException(e.getMessage(), e);
+        }
 
-        return cadastroCidadeService.salvar(cidade);
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
@@ -55,7 +62,11 @@ public class CidadeController {
 
         Cidade cidadeNovo = cadastroCidadeService.buscarOuFalhar(id);
         BeanUtils.copyProperties(cidade, cidadeNovo, "id");
-        return cadastroCidadeService.salvar(cidadeNovo);
-
+        try{
+            return cadastroCidadeService.salvar(cidadeNovo);
+        }
+        catch(EstadoNaoEncontradoException e){
+            throw new NegocioException(e.getMessage(), e);
+        }
     }
 }
